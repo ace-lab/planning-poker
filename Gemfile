@@ -32,6 +32,7 @@ gem 'bson_ext'
 gem 'google-api-client', '~> 0.8'
 
 gem 'rspec-rails', '~> 3.6.1', group: [:test, :development]
+gem 'listen', '~> 3.0', group: [:test, :development]
 
 group :test do
   gem 'factory_bot_rails'
