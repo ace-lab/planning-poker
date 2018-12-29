@@ -6,6 +6,7 @@ env:
     - CC_TEST_REPORTER_ID=45efa03f9150107656ff1bf2089f9cf78b89adc343e97217995d76fb6d8961b0
 before_install:
 - openssl aes-256-cbc -k "$encrypted_key" -in secrets.tar.enc -out secrets.tar -d
+- tar xvf secrets.tar
 - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 - chmod +x ./cc-test-reporter
 before_script:
@@ -17,3 +18,4 @@ script:
 after_script:
 - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
+tar xvf secrets.tar
