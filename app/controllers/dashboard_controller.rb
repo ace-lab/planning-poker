@@ -43,6 +43,8 @@ class DashboardController < ApplicationController
     if session[:last_project] && @projects && !@projects.empty?
       curr_proj = @client.project(session[:last_project])
       @projects.unshift @projects.delete(curr_proj)
+    else
+      session[:last_project] = @projects.first.id
     end
   end
 
