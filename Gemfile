@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
-ruby "2.2.2"
 
-gem 'rails', '4.2.5.1'
+gem 'rails', '~> 4.2.10'
 gem 'thin'
 gem 'faye'
 gem 'rest-client'
