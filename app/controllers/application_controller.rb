@@ -61,7 +61,6 @@ class ApplicationController < ActionController::Base
             }
         )
       elsif params[:action].eql? 'discussion'
-        puts "Got here!!!"
         activity_param.update(
             {
                 story_id: @resource[:story_id],

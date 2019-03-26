@@ -147,7 +147,7 @@ class DashboardController < ApplicationController
       curr_proj = @client.project(params[:project_id])
       @projects.unshift @projects.delete(curr_proj)
     end
-    if not is_sessionized(@projects.first)
+    if !@projects.empty? and not is_sessionized(@projects.first)
       Project.classify_sessions(@projects.first)
     end
   end

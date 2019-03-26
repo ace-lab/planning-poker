@@ -274,7 +274,7 @@ describe DashboardController, type: :controller do
   end
 
   describe "GET analytics" do
-    before { @client.stubs(:projects) }
+    before { @client.stubs(:projects).returns([]) }
     let(:params) {{
       project_id: 1,
     }}

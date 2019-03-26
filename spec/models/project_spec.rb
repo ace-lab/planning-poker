@@ -51,7 +51,7 @@ describe Project, type: :model do
         end
         it "returns milestones in a certain order and format" do
             retVal = Project.get_milestones(project)
-            assert_equal retVal, "story2: 0 Day(s) Away\n\nstory3: 4 Day(s) Away\n\nstory1: -3 Day(s) Ago\n\nstory5: Unscheduled\n\nstory4: Unscheduled"
+            retVal.should start_with "story2: 0 Day(s) Away\n\nstory3: 4 Day(s) Away\n\nstory1: -3 Day(s) Ago\n"
         end
     end
 end
