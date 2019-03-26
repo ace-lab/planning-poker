@@ -1,13 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5.1'
+gem 'rails', '~> 4.2.10'
 gem 'thin'
 gem 'faye'
 gem 'rest-client'
 gem 'json'
 gem 'tracker_api'
 gem 'pg', '~> 0.21'
-gem 'sqlite3'
 
 # Heroku and New Relic
 gem 'rails_12factor'
@@ -45,12 +44,14 @@ group :test do
   gem 'zeus', require: false
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels' # basic imperative step defs
+  gem 'sqlite3', '~> 1.3.6'
 end
 
 group :development do
   gem 'spring'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'sqlite3', '~> 1.3.6'
   # gem 'capistrano', ' 3.0', require: false
   # gem 'capistrano-rails', '1.1', require: false
   # gem 'capistrano-bundler', '~> 1.1', require: false

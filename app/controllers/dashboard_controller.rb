@@ -41,9 +41,13 @@ class DashboardController < ApplicationController
   def index
     session[:analytics] = false
     @projects = @client.projects
-    if session[:last_project] && @projects && !@projects.empty?
-      curr_proj = @client.project(session[:last_project])
-      @projects.unshift @projects.delete(curr_proj)
+    if @projects && !@projects.empty?
+      if session[:last_project]
+        curr_proj = @client.project(session[:last_project])
+        @projects.unshift @projects.delete(curr_proj)
+      else
+        session[:last_project] = @projects.first.id
+      end
     end
   end
 
@@ -103,6 +107,7 @@ class DashboardController < ApplicationController
     respond_with @resource do |format|
       format.js { render 'dashboard/ajax/reveal' }
     end
+    record_reveal
   end
 
   def discussion
@@ -133,6 +138,7 @@ class DashboardController < ApplicationController
     respond_with @resource do |format|
       format.js { render 'dashboard/ajax/select' }
     end
+    record_select
   end
 
   def get_hangouts_link
@@ -165,5 +171,25 @@ protected
 
   def decode_user
     params[:user] = Base64.strict_decode64(params[:user]) if params and params[:user]
+  end
+
+  # Push logs to Pivotal Tracker upon a reveal call
+  def record_reveal
+    votes = Vote.where(story_id: @resource[:story_id])
+    project_id = session[:last_project].to_i
+    comment_content = votes.map { |vote| "#{vote.user}: #{vote.vote}"}.join('\n')
+    comment_content = "Votes: \n#{comment_content}"
+
+    story = @client.project(project_id).story(@resource[:story_id].to_i)
+    story.create_comment(text: comment_content)
+  end
+
+  # Push logs to Pivotal Tracker upon a select call
+  def record_select
+    project_id = session[:last_project].to_i
+    comment_content = "Select vote from #{@resource[:username]}"
+
+    story = @client.project(project_id).story(@resource[:story_id].to_i)
+    story.create_comment(text:comment_content)
   end
 end

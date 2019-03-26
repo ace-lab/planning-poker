@@ -82,7 +82,7 @@ Rails.application.configure do
   # Publisher for push notification
   config.publisher = {
     # production faye server - change the URL so that it points to the correct server.
-    domain: (ENV['FAYE_URL'] || 'localhost:9292'),
+    domain: (ENV['FAYE_URL'] || 'https://planning-poker-169.herokuapp.com:9292'),
     # secret key
     secret: (ENV['FAYE_SECRET'] || 'secret')
   }
