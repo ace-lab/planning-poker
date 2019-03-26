@@ -36,7 +36,7 @@ describe SessionsController, type: :controller do
 
       it 'should set user session' do
         post :create, params, valid_session
-        expect(session[:user]).to eq({ username: user.username, token: user.token })
+        expect(session[:user]).to eq({ username: user.username, token: user.token, id: user.id })
       end
 
       it 'should redirect to root' do

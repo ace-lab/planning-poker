@@ -39,7 +39,7 @@ describe DashboardController, type: :controller do
       expect(response).to render_template 'dashboard/ajax/project'
     end
 
-    it 'should create  an acvitiy' do
+    it 'should create  an activity' do
       Activity.expects(:create)
           .with({
                     user_id: user.id,
@@ -206,9 +206,7 @@ describe DashboardController, type: :controller do
       'controller' => 'dashboard',
       'action'     => 'update'
     }}
-    let(:fake_return) { story_params.update({id: '1'}) }
-
-    before { Story.stubs(:update).returns(fake_return) }
+    before { Story.stubs(:update).returns(OpenStruct.new) }
 
     it 'should call update on Story' do
       params['client'] = @client
@@ -223,12 +221,6 @@ describe DashboardController, type: :controller do
 
     it 'should create an activity' do
       Activity.expects(:create)
-          .with({
-                    user_id: user.id,
-                    activity_type: 'dashboard#update',
-                    story_id: '1',
-                    activity_data: fake_return.to_json
-                })
       xhr :post, :update, params, valid_session, format: :js
     end
   end
@@ -278,6 +270,17 @@ describe DashboardController, type: :controller do
     it "should redirect to correct page after starting process" do
       get :get_hangouts_link, params, valid_session
       expect(response).to redirect_to :root
+    end
+  end
+
+  describe "GET analytics" do
+    before { @client.stubs(:projects) }
+    let(:params) {{
+      project_id: 1,
+    }}
+    it "should show the analytics dashboard" do
+      get :analytics, params, valid_session
+      expect(response).to render_template "dashboard/analytics"
     end
   end
 

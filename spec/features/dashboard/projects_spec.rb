@@ -52,4 +52,24 @@ describe 'Dashboard::Projects', type: :feature do
 
   end
 
+  context 'open last opened project for analytics' do
+    let(:projects) { (1..5).map { |i| init_object(project_params) }}
+    let(:project1)  { projects.first }
+    let(:project2)  { projects.second }
+    let(:project2_name) { project2.name }
+
+    before do
+      stub_projects(projects)
+      stub_stories(project1)
+      stub_stories(project2)
+      page.set_rack_session(last_project: project2.id)
+      @client.stubs(:project).returns(project2)
+      visit analytics_path(project2.id)
+    end
+
+    specify { expect(page).to have_content project2.name }
+    # specify { expect(page).to have_css("projects-list active", :text => project2_name) }
+
+  end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180801063748) do
+ActiveRecord::Schema.define(version: 20181019053529) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id"
@@ -32,6 +32,11 @@ ActiveRecord::Schema.define(version: 20180801063748) do
     t.datetime "updated_at", null: false
     t.string   "pivotal_id"
     t.string   "event_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "session_id"
+    t.integer "story_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,5 @@
+<div id="analytics-table" class="analytics_table col-md-12">
+  <div id="stories">
+    <%= render 'dashboard/stories/analytics', project: @projects.first unless @projects.blank? %>
+  </div>
+</div>

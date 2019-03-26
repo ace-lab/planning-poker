@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     @client = TrackerApi::Client.new(token: user_token)
   end
 
-  helper_method :user_signed_in?, :current_user
+  helper_method :user_signed_in?, :current_user, :is_analytics?
 
   def current_user
     @current_user ||= session[:user]
@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
 
   def user_signed_in?
     !!session[:user]
+  end
+
+  def is_analytics?
+    !!session[:analytics]
   end
 
   def rescue_steps(message)
@@ -36,7 +40,7 @@ class ApplicationController < ActionController::Base
   def record_activity
     activity_param = {
         activity_type: "#{params[:controller]}\##{params[:action]}",
-        user_id: current_user.nil? ? nil : current_user[:id],
+        user_id: current_user.nil? ? nil : current_user['id'].to_i,
     }
 
     if params[:action].eql? 'project'
@@ -44,10 +48,37 @@ class ApplicationController < ActionController::Base
     end
 
     if @resource
-      activity_param.update({
-        story_id: @resource.key?(:story_id) ?  @resource[:story_id] : @resource[:id],
-        activity_data: @resource.to_json
-      })
+      if params[:action].eql? 'update'
+        activity_param.update(
+            {
+                story_id: @resource.id,
+                activity_data: {
+                    story_id: @resource.id,
+                    name: @resource.name,
+                    description: @resource.description,
+                    estimate: @resource.estimate,
+                }
+            }
+        )
+      elsif params[:action].eql? 'discussion'
+        puts "Got here!!!"
+        activity_param.update(
+            {
+                story_id: @resource[:story_id],
+                activity_data: {
+                    story_id: @resource[:story_id],
+                }
+            }
+        )
+        Session.where(story_id: @resource[:story_id].to_i).delete_all
+      else
+        activity_param.update(
+            {
+                story_id: @resource[:story_id],
+                activity_data: @resource.to_json
+            }
+        )
+      end
     end
     Activity.create activity_param
   end

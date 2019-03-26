@@ -60,3 +60,6 @@ end
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+# Added at 2018-10-19 01:42:24 -0700 by ahemani1:
+gem "byebug", "~> 10.0", :groups => [:development, :test]

@@ -1,0 +1,25 @@
+<%= render 'overlay' %>
+
+<div id="wrapper">
+  <div id="header" class="row">
+    <div class="row">
+      <h1 class="col-md-10">
+        <span class="fa-stack logo">
+          <i class="fa fa-circle-o fa-stack-2x"></i>
+          <i class="fa fa-heart fa-stack-1x"></i>
+        </span>
+        <%= t('planning') %><span><%= t('poker') %></span>Analytics
+      </h1>
+      <div id="header-links" class="text-right col-md-2">
+        <%= link_to logout_path, method: :delete, class: 'white header-links' do %>
+          <i class="fa fa-sign-out"></i> <%= t('signout') %>
+        <% end %>
+      </div>
+    </div>
+    <%= render 'menu', projects: @projects unless @projects.blank? %>
+  </div>
+
+  <div id="content" class="col-md-12">
+    <%= yield %>
+  </div>
+</div>

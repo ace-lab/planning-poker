@@ -24,7 +24,7 @@
   <body id="<%= layout_class %>">
 
     <%= render 'notification' %>
-    <%= render layout_class %>
+    <%= render layout_class, {analytics: is_analytics} %>
 
     <script>
       window.environment = '<%= publisher_environment %>'

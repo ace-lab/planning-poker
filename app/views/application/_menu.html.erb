@@ -7,7 +7,11 @@
     <ul id="menu-compact-list" class="dropdown-menu" role="menu" aria-labelledby="menu-compact-list">
       <% projects.each do |project| %>
         <li role="presentation">
-          <%= link_to(project.name, project_path(project.id), remote: true, role: 'menuitem') %>
+          <% if session[:analytics] %>
+            <%= link_to(project.name, analytics_path(:project_id => project.id), remote: true, role: 'menuitem') %>
+          <% else %>
+            <%= link_to(project.name, project_path(project.id), remote: true, role: 'menuitem') %>
+          <% end %>
         </li>
       <% end %>
     </ul>
@@ -17,7 +21,11 @@
 <ul id="menu" class="clearfix">
   <% projects.first(5).each_with_index do |project, index| %>
     <li id ="project-<%= project.id %>" class="projects-list<%= ' active' if index.zero? %>">
-      <%= link_to(project.name, project_path(project.id), remote: true) %>
+      <% if session[:analytics] %>
+        <%= link_to(project.name, analytics_path(:project_id => project.id), remote: false) %>
+      <% else %>
+        <%= link_to(project.name, project_path(project.id), remote: true) %>
+      <% end %>
     </li>
   <% end %>
 
@@ -31,7 +39,11 @@
         <ul class="dropdown-menu">
           <% projects.drop(5).each do |project| %>
             <li id ="project-<%= project.id %>" class="projects-list">
-              <%= link_to(project.name, project_path(project.id), remote: true) %>
+              <% if session[:analytics] %>
+                <%= link_to(project.name, analytics_path(:project_id => project.id)) %>
+              <% else %>
+                <%= link_to(project.name, project_path(project.id), remote: true) %>
+              <% end %>
             </li>
           <% end %>
         </ul>

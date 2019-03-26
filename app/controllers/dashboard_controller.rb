@@ -39,6 +39,7 @@ class DashboardController < ApplicationController
   $calendar_id = "berkeley.edu_9f5b4e17egep4l9e0birqr8pu4@group.calendar.google.com"
 
   def index
+    session[:analytics] = false
     @projects = @client.projects
     if session[:last_project] && @projects && !@projects.empty?
       curr_proj = @client.project(session[:last_project])
@@ -139,8 +140,28 @@ class DashboardController < ApplicationController
     redirect_to root_path
   end
 
+  def analytics
+    session[:analytics] = true
+    @projects = @client.projects
+    if params[:project_id] && @projects && !@projects.empty?
+      curr_proj = @client.project(params[:project_id])
+      @projects.unshift @projects.delete(curr_proj)
+    end
+    if not is_sessionized(@projects.first)
+      Project.classify_sessions(@projects.first)
+    end
+  end
+
 
 protected
+
+  def is_sessionized(project)
+    if project.stories.length == Session.where(story_id: project.stories.map(&:id)).length
+      true
+    else
+      false
+    end
+  end
 
   def decode_user
     params[:user] = Base64.strict_decode64(params[:user]) if params and params[:user]
