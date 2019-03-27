@@ -69,6 +69,16 @@ class User < ActiveRecord::Base
       end
       this_user.save!
     end
+
+    def authenticate_after_oauth(username)
+      # Returns user if found and has API token, nil if not
+      this_user = User.find_by_username(username)
+      if this_user and not this_user.token.empty?
+        this_user
+      else
+        nil
+      end
+    end
   end
 
   # Checks passwords against crypted password

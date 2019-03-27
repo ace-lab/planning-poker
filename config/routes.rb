@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root to: 'dashboard#index'
 
+  get 'auth/:provider/callback', to: 'sessions#google_oauth_login'
+  get 'auth/failure', to: 'sessions#new'
+
   get 'favicon.ico', controller: :application, action: :favicon
 
   controller :sessions do

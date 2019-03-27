@@ -71,7 +71,6 @@ describe User, type: :model do
 
     context '#set_new_api_key' do
       it 'creates new user if one does not exist' do
-        # User.expects(:new).at_least(1).returns(user)
         num_users_before = User.all.size
         User.set_new_api_key({'username': username2, 'api_key': token})
         assert_equal num_users_before + 1, User.all.size
@@ -87,6 +86,32 @@ describe User, type: :model do
         num_users_before = User.all.size
         User.set_new_api_key({username: username, api_key: token})
         assert_equal num_users_before, User.all.size
+      end
+    end
+
+    context '#authenticate_after_oauth' do
+      it 'returns nil if user token not found' do
+        # User doesn't exist
+        assert_equal User.authenticate_after_oauth(username2), nil
+
+        # User exists but doesn't have non-empty token set
+        one_mock = mock
+        JSON.stubs(:parse).with(one_mock).returns({'api_token' => ""})
+        RestClient::Request.stubs(:execute).returns(one_mock)
+        User.stubs(:salted).returns(user.salt)
+        User.create(params)
+
+        assert_equal User.authenticate_after_oauth(username), nil
+      end
+
+      it 'returns the user if user token is found' do
+        one_mock = mock
+        JSON.stubs(:parse).with(one_mock).returns({'api_token' => user.token})
+        RestClient::Request.stubs(:execute).returns(one_mock)
+        User.stubs(:salted).returns(user.salt)
+        u = User.create(params)
+
+        assert_equal User.authenticate_after_oauth(username), u
       end
     end
   end

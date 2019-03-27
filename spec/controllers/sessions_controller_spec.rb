@@ -98,4 +98,19 @@ describe SessionsController, type: :controller do
     end
   end
 
+  # How do we even get around this??
+  # describe 'GET auth/:provider/callback' do
+  #   it 'should log in a user if we have the API tokens for this user' do
+  #     User.stubs(:authenticate_after_oauth).returns(user)
+  #     get oauth_callback_path("google_oauth"), {}, valid_session
+  #     expect(response).to redirect_to root_path
+  #   end
+
+  #   it 'should not log in a user if we do not have API tokens for this user' do
+  #     User.stubs(:authenticate_after_oauth).returns(nil)
+  #     get :google_oauth_login, {}, valid_session
+  #     expect(response).to redirect_to login_path
+  #   end
+  # end
+
 end

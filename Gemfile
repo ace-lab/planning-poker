@@ -29,6 +29,8 @@ gem 'pivotal-tracker'
 gem 'backtop'
 gem 'bson_ext'
 gem 'google-api-client', '~> 0.8'
+gem "omniauth-google-oauth2"
+gem 'omniauth-oauth2', '~> 1.3.1'
 
 gem 'rspec-rails', '~> 3.6.1', group: [:test, :development]
 

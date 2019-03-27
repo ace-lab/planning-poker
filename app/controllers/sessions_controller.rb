@@ -6,17 +6,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.authenticate(session_params)
-
-    if user
-      session[:user] = {
-        username: user.username,
-        token:    user.token,
-      }
-    
-      redirect_to :root, notice: t('flashes.sessions.success')
-    else
-      redirect_to :login, alert: t('flashes.sessions.failed')
-    end
+    create_session_helper(user, t('flashes.sessions.failed'))
   end
 
   def destroy
@@ -36,6 +26,26 @@ class SessionsController < ApplicationController
     else
       User.set_new_api_key(params)
       redirect_to :login, notice: t('flashes.sessions.token_set')
+    end
+  end
+
+  def google_oauth_login
+    # Find out which user logged in successfully
+    # Set session, then redirect to root
+    this_user = User.authenticate_after_oauth(env["omniauth.auth"]["info"]["email"])
+    create_session_helper(this_user, t('flashes.sessions.without_token'))
+  end
+
+  def create_session_helper(user, potential_failure_msg)
+    if user
+      session[:user] = {
+        username: user.username,
+        token:    user.token,
+      }
+    
+      redirect_to :root, notice: t('flashes.sessions.success')
+    else
+      redirect_to :login, alert: potential_failure_msg
     end
   end
 
