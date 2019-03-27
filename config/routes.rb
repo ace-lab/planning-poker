@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     get    :login,  action: :new
     post   :login,  action: :create
     delete :logout, action: :destroy
+    get    :new_api_key, action: :new_api_key
+    post   :new_api_key, action: :set_api_key, as: :set_api_key
   end
 
   resources :dashboard, only: [:index]

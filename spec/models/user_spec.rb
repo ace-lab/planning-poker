@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe User, type: :model do
   let(:username)  { Forgery(:internet).email_address }
+  let(:username2)  { Forgery(:internet).email_address }
   let(:password)  { 'password' }
+  let(:token) {'COMPLETELY_RANDOM_API_KEY'}
 
   let(:params) {{
     username: username,
@@ -64,6 +66,27 @@ describe User, type: :model do
 
       it 'should call save' do
         User.any_instance.expects(:save)
+      end
+    end
+
+    context '#set_new_api_key' do
+      it 'creates new user if one does not exist' do
+        # User.expects(:new).at_least(1).returns(user)
+        num_users_before = User.all.size
+        User.set_new_api_key({'username': username2, 'api_key': token})
+        assert_equal num_users_before + 1, User.all.size
+      end
+
+      it 'updates old user if new API key passed in' do
+        one_mock = mock
+        JSON.stubs(:parse).with(one_mock).returns({'api_token' => user.token})
+        RestClient::Request.stubs(:execute).returns(one_mock)
+        User.stubs(:salted).returns(user.salt)
+        User.create(params)
+
+        num_users_before = User.all.size
+        User.set_new_api_key({username: username, api_key: token})
+        assert_equal num_users_before, User.all.size
       end
     end
   end

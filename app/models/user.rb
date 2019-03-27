@@ -55,6 +55,20 @@ class User < ActiveRecord::Base
     def encrypt(password, salt)
       Digest::SHA1.hexdigest("--#{salt}--#{password}--")
     end
+
+    def set_new_api_key(params)
+      this_user = User.find_by_username(params[:username])
+      if not this_user
+        this_user = User.new(
+          username: params[:username],
+          password: (0...8).map { (65 + rand(26)).chr }.join,
+          token:    params[:api_key]
+        )
+      else
+        this_user.token = params[:api_key]
+      end
+      this_user.save!
+    end
   end
 
   # Checks passwords against crypted password

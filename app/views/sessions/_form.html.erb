@@ -10,3 +10,14 @@
 
   <%= submit_tag t('signin').upcase, class: 'btn btn-success' %>
 <% end %>
+
+<br>
+<br>
+
+<div class='col-md-15 text-left font-size-lg'>
+	<!-- Sign in with Google -->
+
+	<!-- Set API Key -->
+	<p>First time signing in with Google? Set your API token below.</p>
+	<%= button_to "Set API Token", new_api_key_path, method: :get, class: 'btn btn-success' %>
+</div>
