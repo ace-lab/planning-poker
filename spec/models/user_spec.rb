@@ -92,7 +92,7 @@ describe User, type: :model do
     context '#authenticate_after_oauth' do
       it 'returns nil if user token not found' do
         # User doesn't exist
-        assert_equal User.authenticate_after_oauth(username2), nil
+        assert_nil User.authenticate_after_oauth(username2)
 
         # User exists but doesn't have non-empty token set
         one_mock = mock
@@ -101,7 +101,7 @@ describe User, type: :model do
         User.stubs(:salted).returns(user.salt)
         User.create(params)
 
-        assert_equal User.authenticate_after_oauth(username), nil
+        assert_nil User.authenticate_after_oauth(username)
       end
 
       it 'returns the user if user token is found' do

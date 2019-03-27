@@ -4,7 +4,10 @@ describe Project, type: :model do
     before do
         Project.delete_all
         $service = mock("$service")
-        $service.stubs(:insert_event).returns({:id => "abcd"})
+        request_options_mock = mock()
+        $service.stubs(:request_options).returns(request_options_mock)
+        request_options_mock.stubs(:retries=)
+        $service.stubs(:insert_event).returns(OpenStruct.new({:id => "abcd"}))
     end
     let(:project_id) { "some_id" }
     context "#create_hangout" do
@@ -13,7 +16,8 @@ describe Project, type: :model do
             Project.create_hangout(:project_id)
         end
         it "locks before calling API" do
-            Project.any_instance.expects(:event_id=).with("LOCKED")
+            Project.any_instance.expects(:event_id=).at_least(1).with("LOCKED")
+            Project.any_instance.expects(:event_id=).at_most(1).with("abcd")
             Project.create_hangout(:project_id)
         end
         it "creates new project with event" do
