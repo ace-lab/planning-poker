@@ -217,6 +217,35 @@
         background: #c6d9b7;
       }
     }
+
+    .session-even {
+      background-color: #E4EFF7;
+      border-bottom: 1px solid #DDD;
+
+      &:hover {
+        background: #D1E0ED;
+      }
+    }
+
+    .session-odd {
+      background: #daebcf;
+      border-top: 1px solid #eefce2;
+      border-bottom: 1px solid #c3d5b4;
+
+      &:hover {
+        background: #c6d9b7;
+      }
+    }
+
+    .session-outlier {
+      background-color: #F3D1D1;
+      border-bottom: 1px solid #DBB0B0;
+    }
+
+    .session-not_discussed {
+      background-color: #f2ded0;
+      border-bottom: 1px solid #DBB0B0;
+    }
   }
 
   .icon-bar {
@@ -440,6 +469,36 @@
     #sidebar {
       margin: 20px 0;
       padding: 0;
+    }
+  }
+
+  .analytics_table {
+    .titles {
+      background-color: #2C2D2F;
+      border-top :1px solid #393A3C;
+      color: #FFF;
+      line-height: 27px;
+      overflow: hidden;
+      padding: 5px 10px;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .story_rows {
+      font-size: 12px;
+      background-color: #F3F3D1;
+      border-bottom: 1px solid #DBDBB0;
+      border-top: 1px solid #FFF;
+
+      &:hover {
+        background: #f0f0c6;
+      }
+
+      .story-overview {
+        padding: 10px;
+      }
     }
   }
 }

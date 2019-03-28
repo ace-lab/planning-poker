@@ -8,9 +8,21 @@
           <i class="fa fa-circle-o fa-stack-2x"></i>
           <i class="fa fa-heart fa-stack-1x"></i>
         </span>
-        <%= t('planning') %><span><%= t('poker') %></span>
+        <% if analytics %>
+          <%= t('planning') %><span><%= t('poker') %></span>Analytics
+        <% else %>
+          <%= t('planning') %><span><%= t('poker') %></span>
+        <% end %>
       </h1>
       <div id="header-links" class="text-right col-md-2">
+        <% if analytics %>
+          <%= link_to "Story View", root_path, class: "white header-links" %>
+        <% else %>
+          <% if @projects.first %>
+            <%= link_to "Analytics", analytics_path(@projects.first.id), class: "white header-links" %>
+          <% end %>
+        <% end %>
+        &emsp;&emsp;
         <%= link_to logout_path, method: :delete, class: 'white header-links' do %>
           <i class="fa fa-sign-out"></i> <%= t('signout') %>
         <% end %>
@@ -32,17 +44,20 @@
     </div>
 
   <% else %>
-
-    <div id="sub-menu" class="row">
-      <ul>
-        <li id="filter-unestimated" class="selected">
-          <%= t('unestimated').upcase %>
-        </li>
-        <li id="filter-all">
-          <%= t('all').upcase %>
-        </li>
-      </ul>
-    </div>
+    
+      <div id="sub-menu" class="row">
+        <ul>
+          <% if not session[:analytics] %>
+            <li id="filter-unestimated" class="selected">
+              <%= t('unestimated').upcase %>
+            </li>
+            <li id="filter-all">
+              <%= t('all').upcase %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    
 
     <div id="content" class="col-md-12">
       <%= yield %>

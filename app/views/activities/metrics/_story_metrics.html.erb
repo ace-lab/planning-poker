@@ -1,0 +1,29 @@
+<%- stories.each do |sid| %>
+  <div id="story-<%= sid %>" class="story clearfix story-unstarted story-feature">
+    <div class="story-overview clearfix">
+      <!--      <div class="pull-left story-icons">-->
+      <%#= link_to detail_path(story.id, 'expand', encoded_user), id: "expand-activity-#{activity.id}", remote: true do %>
+      <!--          <span class="fa fa-play story-icon expand"></span>-->
+      <%# end %>
+      <!--        <span class="<%#= icon(story) %> story-icon"></span>-->
+      <!--        <span class="fa story-icon">-->
+      <%#= raw estimation(story) %>
+      <!--        </span>-->
+      <!--      </div>-->
+      <div class="pull-left story-description">
+        <span>
+          <strong>Story ID: </strong> <%= sid %>
+        </span>
+        <span>
+          <strong>Discussion Time </strong> <%=  Activity.discuss_time(sid).round %> minutes
+        </span>
+        <span>
+          <strong>Vote Variance </strong> <%=	 Activity.vote_variance(sid).round(2) %>
+        </span>
+        <span>
+          <strong>Updated by </strong> <%=	 Activity.updated_by(sid) %>
+        </span>
+      </div>
+    </div>
+  </div>
+<% end %>

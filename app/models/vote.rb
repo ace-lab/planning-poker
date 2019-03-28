@@ -27,5 +27,11 @@ class Vote < ActiveRecord::Base
       vote.destroy if vote
     end
 
+    def stories
+      updated = Activity.where(activity_type: 'dashboard#update').map(&:story_id).to_set
+      selected = Activity.where(activity_type: 'dashboard#select').map(&:story_id).to_set
+      updated & selected
+    end
+
   end
 end
