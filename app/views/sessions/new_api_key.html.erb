@@ -1,0 +1,24 @@
+<div id="signin-box">
+  <h1>
+    Pivotal Tracker
+  </h1>
+  <div class='col-md-15 text-left font-size-lg'>
+	  <p1>You only need to set your API key once (or if you have had to change your password).</p1><br>
+	  <p1>This is only required for Google OAuth users. Regular users with passwords do not need to fill this form out. Proceed to the Login screen as normal to sign in.</p1><br><br>
+	  <p1>For information on how to access your API key, <%= link_to "click this link", "https://www.pivotaltracker.com/help/articles/api_token/" %> .</p1>
+  </div>
+  <br>
+
+  <%= form_tag set_api_key_path, as: :session do %>
+
+	  <div class="form-group">
+	    <%= text_field_tag :username, nil, class: 'form-control', placeholder: 'Email / Username' %>
+	  </div>
+
+	  <div class="form-group">
+	    <%= password_field_tag :api_key, nil, class: 'form-control', placeholder: 'API Key' %>
+	  </div>
+
+	  <%= submit_tag t('setapikey').upcase, class: 'btn btn-success' %>
+	<% end %>
+</div>

@@ -1,12 +1,17 @@
 Rails.application.routes.draw do
   root to: 'dashboard#index'
 
+  get 'auth/:provider/callback', to: 'sessions#google_oauth_login'
+  get 'auth/failure', to: 'sessions#new'
+
   get 'favicon.ico', controller: :application, action: :favicon
 
   controller :sessions do
     get    :login,  action: :new
     post   :login,  action: :create
     delete :logout, action: :destroy
+    get    :new_api_key, action: :new_api_key
+    post   :new_api_key, action: :set_api_key, as: :set_api_key
   end
 
   resources :dashboard, only: [:index]

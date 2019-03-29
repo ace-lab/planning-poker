@@ -280,8 +280,11 @@ describe DashboardController, type: :controller do
 
     before do
       $service = mock("$service")
-      $service.stubs(:insert_event).returns({:id => "abcd"})
-      end
+      $service.stubs(:insert_event).returns(OpenStruct.new({:id => "abcd"}))
+      request_options_mock = mock()
+      $service.stubs(:request_options).returns(request_options_mock)
+      request_options_mock.stubs(:retries=)
+    end
 
     it "should call on Project#create_hangout" do
       Project.expects(:create_hangout)

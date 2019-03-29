@@ -13,7 +13,6 @@ describe SessionsController, type: :controller do
   end
 
   describe 'GET new' do
-
     it 'should redirect to root' do
       get :new, {}, valid_session
       expect(response).to redirect_to root_path
@@ -74,5 +73,44 @@ describe SessionsController, type: :controller do
       expect(response).to redirect_to login_path
     end
   end
+
+  describe 'GET new_api_key' do
+    it 'should redirect to root' do
+      get :new_api_key, {}, valid_session
+      expect(response).to redirect_to root_path
+    end
+  end
+
+  describe 'POST new_api_key' do
+    let(:params) {{
+      'username' => user.username,
+      'api_key' => "abcdtestrandomchars"
+    }}
+
+    it 'should create a new user if one does not currently exist if successful' do
+      post :set_api_key, params, valid_session
+      expect(response).to redirect_to login_path
+    end
+
+    it 'should not create new user if not successful' do
+      post :set_api_key, {'username' => "",'api_key' => ""}, valid_session
+      expect(response).to redirect_to new_api_key_path
+    end
+  end
+
+  # How do we even get around this??
+  # describe 'GET auth/:provider/callback' do
+  #   it 'should log in a user if we have the API tokens for this user' do
+  #     User.stubs(:authenticate_after_oauth).returns(user)
+  #     get oauth_callback_path("google_oauth"), {}, valid_session
+  #     expect(response).to redirect_to root_path
+  #   end
+
+  #   it 'should not log in a user if we do not have API tokens for this user' do
+  #     User.stubs(:authenticate_after_oauth).returns(nil)
+  #     get :google_oauth_login, {}, valid_session
+  #     expect(response).to redirect_to login_path
+  #   end
+  # end
 
 end

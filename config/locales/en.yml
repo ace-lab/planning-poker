@@ -11,6 +11,7 @@ en:
   reveal:       "Reveal"
   save:         "Save"
   signin:       "Sign In"
+  setapikey:    "Set API Key"
   signout:      "Sign Out"
   story:        "Story"
   unestimated:  "Unestimated"
@@ -45,6 +46,9 @@ en:
       signin:       "You will need to sign in first"
       success:      "You have successfully logged in"
       unauthorized: "No API Key / Token found. Please re-login!"
+      token_set:    "Your API Key has been successfully set!"
+      token_not_set: "Your API Key wasn't set. Please try again."
+      without_token:        "You're using an account without an API token set. Please check your account or make sure you have an API token set"
 
     stories:
       update:   "Story ID#%{id} has been updated successfully"
