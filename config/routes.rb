@@ -28,5 +28,9 @@ Rails.application.routes.draw do
     get 'discussion/:story_id', action: :discussion, as: :discussion
   end
 
-  resources :activities, only: [:index, :show, :create, :destroy]
+  resources :activities, only: [:index] do
+    collection do
+      get 'meetings'
+    end
+  end
 end

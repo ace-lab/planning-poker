@@ -13,6 +13,10 @@ class ActivitiesController < ApplicationController
   def show
   end
 
+  def meetings
+    @meetings = Activity.infer_meetings
+  end
+
   # POST /activities.json
   def create
     @activity = Activity.new(activity_params)
