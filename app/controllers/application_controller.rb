@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def record_activity
     activity_param = {
         activity_type: "#{params[:controller]}\##{params[:action]}",
-        user_id: current_user.nil? ? nil : current_user[:id],
+        username: current_user.nil? ? nil : current_user['username']
     }
 
     if params[:action].eql? 'project'
