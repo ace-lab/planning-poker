@@ -11,8 +11,8 @@ class Activity < ActiveRecord::Base
         current_meeting = [activity]
       else
         current_meeting.push(activity)
-        prev_time = activity.created_at
       end
+      prev_time = activity.created_at
     end
     meetings.push(current_meeting.clone)
     meetings

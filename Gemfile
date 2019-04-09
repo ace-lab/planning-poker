@@ -33,6 +33,7 @@ gem "omniauth-google-oauth2"
 gem 'omniauth-oauth2', '~> 1.3.1'
 
 gem 'rspec-rails', '~> 3.6.1', group: [:test, :development]
+gem 'rb-readline'
 
 group :test do
   gem 'factory_bot_rails'

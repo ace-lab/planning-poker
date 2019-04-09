@@ -1,4 +1,5 @@
-<%- @meetings.each do |meeting| %>
-  <%= meeting.length %>
-  <br>
-<% end %>
+<ul>
+  <%- @meetings.each do |meeting| %>
+    <li><%= meeting.length %></li>
+  <% end %>
+</ul>
