@@ -13,4 +13,7 @@ FactoryBot.define do
     vote      { Forgery::Basic.number(at_least: 1, at_most: 5) }
   end
 
+  factory :activity do
+  end
+
 end
