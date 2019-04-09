@@ -1,4 +1,5 @@
 class ActivitiesController < ApplicationController
+  layout false
   before_action :set_activity, only: [:show, :destroy]
 
   # GET /activities

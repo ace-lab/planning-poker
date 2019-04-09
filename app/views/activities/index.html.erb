@@ -1,0 +1,24 @@
+<table>
+  <thead>
+  <tr>
+    <th>Project ID</th>
+    <th>Story ID</th>
+    <th>User</th>
+    <th>Activity Type</th>
+    <th>Activity Data</th>
+    <th>Timestamp</th>
+  </tr>
+  </thead>
+  <tbody>
+  <%- @activities.each do |activity| %>
+    <tr>
+      <td><%= activity.project_id %></td>
+      <td><%= activity.story_id %></td>
+      <td><%= activity.user_id %></td>
+      <td><%= activity.activity_type %></td>
+      <td><%= activity.activity_data %></td>
+      <td><%= activity.created_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
