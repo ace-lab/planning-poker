@@ -5,15 +5,49 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 
-<ul>
-  <%- @meetings.each_with_index do |meeting, ind| %>
-    <li>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meeting-<%= ind %>">
-        Meeting <%= ind %>
-      </button>
-    </li>
-  <% end %>
-</ul>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Meeting Number</th>
+      <th>Started At</th>
+      <th>Length of the meeting</th>
+      <th>Participants</th>
+      <th>Story updated</th>
+      <th>Votes</th>
+      <th>See more</th>
+    </tr>
+  </thead>
+  <tbody>
+   <%- @meetings.each_with_index do |meeting, ind| %>
+      <tr>
+        <td>
+          Meeting <%= ind %>
+        </td>
+        <td>
+          <%= meeting_start(meeting) %>
+        </td>
+        <td>
+          <%= meeting_length(meeting) %> minutes
+        </td>
+        <td>
+          <%= num_participants(meeting) %> participants
+        </td>
+        <td>
+          <%= num_stories_updated(meeting) %> stories updated
+        </td>
+        <td>
+          <%= num_votes(meeting) %> votes
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#meeting-<%= ind %>">
+            Activities
+          </button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
 
 <%- @meetings.each_with_index do |meeting, ind| %>
    <!-- Modal -->
@@ -52,7 +86,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
