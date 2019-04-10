@@ -20,7 +20,7 @@ describe DashboardController, type: :controller do
 
     it 'should create an activity' do
       Activity.expects(:create)
-          .with({user_id: user.id, activity_type: 'dashboard#index'})
+          .with({username: user.username, activity_type: 'dashboard#index'})
       get :index, {}, valid_session
     end
   end
@@ -42,7 +42,7 @@ describe DashboardController, type: :controller do
     it 'should create  an acvitiy' do
       Activity.expects(:create)
           .with({
-                    user_id: user.id,
+                    username: user.username,
                     activity_type: 'dashboard#project',
                     project_id: params[:id]
                 })
@@ -79,7 +79,7 @@ describe DashboardController, type: :controller do
     it 'should create an activity' do
       Activity.expects(:create)
           .with({
-                    user_id: user.id,
+                    username: user.username,
                     activity_type: 'dashboard#vote',
                     story_id: '123',
                     activity_data: {
@@ -120,7 +120,7 @@ describe DashboardController, type: :controller do
     it 'should create an activity' do
       Activity.expects(:create)
           .with({
-                    user_id: user.id,
+                    username: user.username,
                     activity_type: 'dashboard#reset',
                     story_id: '123',
                     activity_data: {story_id: '123', user: decoded_user(params['user'])}.to_json
@@ -149,7 +149,7 @@ describe DashboardController, type: :controller do
     it 'should create an activity' do
       Activity.expects(:create)
           .with({
-                    user_id: user.id,
+                    username: user.username,
                     activity_type: 'dashboard#detail',
                     story_id: '123',
                     activity_data: {
@@ -181,7 +181,7 @@ describe DashboardController, type: :controller do
     it 'should create an activity' do
       Activity.expects(:create)
           .with({
-                    user_id: user.id,
+                    username: user.username,
                     activity_type: 'dashboard#reveal',
                     story_id: '123',
                     activity_data: {story_id: '123'}.to_json
@@ -230,7 +230,7 @@ describe DashboardController, type: :controller do
     it 'should create an activity' do
       Activity.expects(:create)
           .with({
-                    user_id: user.id,
+                    username: user.username,
                     activity_type: 'dashboard#update',
                     story_id: '1',
                     activity_data: fake_return.to_json
@@ -259,7 +259,7 @@ describe DashboardController, type: :controller do
     it 'should create an activity' do
       Activity.expects(:create)
           .with({
-                    user_id: user.id,
+                    username: user.username,
                     activity_type: 'dashboard#select',
                     story_id: '123',
                     activity_data: {story_id: '123', username: 'username'}.to_json

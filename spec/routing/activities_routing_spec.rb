@@ -7,16 +7,8 @@ RSpec.describe ActivitiesController, type: :routing do
       expect(:get => "/activities").to route_to("activities#index")
     end
 
-    it "routes to #show" do
-      expect(:get => "/activities/1").to route_to("activities#show", :id => "1")
-    end
-
-    it "routes to #create" do
-      expect(:post => "/activities").to route_to("activities#create")
-    end
-
-    it "routes to #destroy" do
-      expect(:delete => "/activities/1").to route_to("activities#destroy", :id => "1")
+    it "routes to #meetings" do
+      expect(get: '/activities/meetings').to route_to('activities#meetings')
     end
 
   end

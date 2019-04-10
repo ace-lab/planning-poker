@@ -285,6 +285,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
     rdoc (4.3.0)
     ref (2.0.0)
     representable (3.0.4)
@@ -431,6 +432,7 @@ DEPENDENCIES
   rack_session_access
   rails (~> 4.2.10)
   rails_12factor
+  rb-readline
   responders (~> 2.0)
   rest-client
   rspec-rails (~> 3.6.1)
