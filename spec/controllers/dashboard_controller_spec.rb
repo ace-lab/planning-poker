@@ -7,7 +7,7 @@ describe DashboardController, type: :controller do
   end
 
   def valid_session
-    {}
+    {last_project: 1}
   end
 
   describe 'GET index' do
@@ -20,14 +20,14 @@ describe DashboardController, type: :controller do
 
     it 'should create an activity' do
       Activity.expects(:create)
-          .with({username: user.username, activity_type: 'dashboard#index'})
+          .with({username: user.username, activity_type: 'dashboard#index', project_id: 1})
       get :index, {}, valid_session
     end
   end
 
   describe 'GET project' do
     before { @client.stubs(:project) }
-    let(:params) {{ id: 1 }}
+    let(:params) {{ id: 2 }}
 
     it 'should call find on PivotalTracker::Project' do
       @client.expects(:project).with(params[:id])
@@ -37,6 +37,10 @@ describe DashboardController, type: :controller do
     it 'should render ajax project' do
       xhr :get, :project, params, valid_session, format: :js
       expect(response).to render_template 'dashboard/ajax/project'
+    end
+
+    it 'should change the session' do
+      expect{ xhr :get, :project, params, valid_session, format: :js }.to change { session[:last_project] }
     end
 
     it 'should create  an acvitiy' do
@@ -82,6 +86,7 @@ describe DashboardController, type: :controller do
                     username: user.username,
                     activity_type: 'dashboard#vote',
                     story_id: '123',
+                    project_id: 1,
                     activity_data: {
                         story_id: '123',
                         vote: '1',
@@ -123,6 +128,7 @@ describe DashboardController, type: :controller do
                     username: user.username,
                     activity_type: 'dashboard#reset',
                     story_id: '123',
+                    project_id: 1,
                     activity_data: {story_id: '123', user: decoded_user(params['user'])}.to_json
                 })
       xhr :get, :reset, params, valid_session, format: :js
@@ -152,6 +158,7 @@ describe DashboardController, type: :controller do
                     username: user.username,
                     activity_type: 'dashboard#detail',
                     story_id: '123',
+                    project_id: 1,
                     activity_data: {
                         story_id: '123',
                         toggle: 'dashboard',
@@ -184,6 +191,7 @@ describe DashboardController, type: :controller do
                     username: user.username,
                     activity_type: 'dashboard#reveal',
                     story_id: '123',
+                    project_id: 1,
                     activity_data: {story_id: '123'}.to_json
                 })
       xhr :get, :reveal, params, valid_session, format: :js
@@ -233,6 +241,7 @@ describe DashboardController, type: :controller do
                     username: user.username,
                     activity_type: 'dashboard#update',
                     story_id: '1',
+                    project_id: 1,
                     activity_data: fake_return.to_json
                 })
       xhr :post, :update, params, valid_session, format: :js
@@ -262,6 +271,7 @@ describe DashboardController, type: :controller do
                     username: user.username,
                     activity_type: 'dashboard#select',
                     story_id: '123',
+                    project_id: 1,
                     activity_data: {story_id: '123', username: 'username'}.to_json
                 })
       xhr :post, :select, params, valid_session, format: :js
