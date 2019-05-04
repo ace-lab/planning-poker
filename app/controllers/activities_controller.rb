@@ -6,6 +6,11 @@ class ActivitiesController < ApplicationController
   # GET /activities.json
   def index
     @activities = Activity.all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @activities.to_csv }
+    end
   end
 
   # GET /activities/1
