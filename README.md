@@ -107,3 +107,6 @@ There will be one new controller method that will be in charge of this - mostly 
 ## Copyright
 
 Planning Poker is licensed under the [MIT License](http://opensource.org/licenses/mit-license.html)
+
+## Teamscope Deployment
+The app is deployed on Heroku at http://planning-poker-169.herokuapp.com. The faye server is, however, deployed on AWS without a production web server setup.
